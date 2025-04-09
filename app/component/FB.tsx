@@ -11,64 +11,57 @@
 
 // export default FB
 
+"use client";
 
-"use client"
-import { useEffect } from 'react';
-
-// Declare FB types globally
+import { useRef, useEffect } from "react";
 declare global {
   interface Window {
-    fbAsyncInit: () => void;
-    FB: {
-      init: (config: {
-        xfbml: boolean;
-        version: string;
-      }) => void;
-    };
+    fbAsyncInit: Function;
+    FB: any;
   }
 }
 
-const FB = () => {
+const ChatBot: React.FC = () => {
+  const MessengerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    // Initialize Facebook SDK
-    window.fbAsyncInit = function() {
-      window.FB.init({
-        xfbml: true,
-        version: 'v18.0'
-      });
-    };
+    if (MessengerRef.current) {
+      // Set page_id and attribution as attributes on the MessengerRef
+      MessengerRef.current.setAttribute("page_id", "530863376787158");
+      MessengerRef.current.setAttribute("attribution", "biz_inbox");
 
-    // Load Facebook SDK script
-    (function(d, s, id) {
-      const fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      const js = d.createElement(s) as HTMLScriptElement;
-      js.id = id;
-      js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0';
-      js.async = true;
-      js.defer = true;
-      if (fjs.parentNode) {
+      // Initialize the Facebook SDK
+      window.fbAsyncInit = function () {
+        window.FB.init({
+          xfbml: true,
+          version: "v16.0",
+        });
+      };
+
+      // Load Facebook SDK script dynamically
+      (function (d, s, id) {
+        var js: any,
+          fjs : any = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
         fjs.parentNode.insertBefore(js, fjs);
-      }
-    }(document, 'script', 'facebook-jssdk'));
-
-    return () => {
-      // Cleanup if needed
-      // delete window.fbAsyncInit;
-      // delete window.FB;
-    };
+      })(document, "script", "facebook-jssdk");
+    }
   }, []);
 
   return (
-    <div 
-      className="fb-page" 
-      data-href="https://www.facebook.com/yourpagename" 
-      data-tabs="messages"
-      data-width="350" 
-      data-height="500" 
-      data-small-header="true"
-    ></div>
+    <>
+      <div id="fb-root"></div>
+      {/* Messenger chat plugin */}
+      <div
+        ref={MessengerRef}
+        id="fb-customer-chat"
+        className="fb-customerchat"
+      ></div>
+    </>
   );
-}
+};
 
-export default FB;
+export default ChatBot;
