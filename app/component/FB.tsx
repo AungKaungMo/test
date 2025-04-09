@@ -28,7 +28,7 @@ declare global {
   }
 }
 
-const FBChat = () => {
+const FB = () => {
   useEffect(() => {
     // Initialize Facebook SDK
     window.fbAsyncInit = function() {
@@ -44,7 +44,7 @@ const FBChat = () => {
       if (d.getElementById(id)) return;
       const js = d.createElement(s) as HTMLScriptElement;
       js.id = id;
-      js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+      js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0';
       js.async = true;
       js.defer = true;
       if (fjs.parentNode) {
@@ -60,19 +60,15 @@ const FBChat = () => {
   }, []);
 
   return (
-    <>
-      <div id="fb-root"></div>
-      <div 
-        className="fb-customerchat"
-        data-attribution="setup_tool"
-        data-page-id="530863376787158"
-        data-theme-color="#0084ff"
-        data-logged-in-greeting="Hi! How can we help you?"
-        data-logged-out-greeting="Hi! How can we help you?"
-        data-minimized="true"
-      ></div>
-    </>
+    <div 
+      className="fb-page" 
+      data-href="https://www.facebook.com/yourpagename" 
+      data-tabs="messages"
+      data-width="350" 
+      data-height="500" 
+      data-small-header="true"
+    ></div>
   );
 }
 
-export default FBChat;
+export default FB;
