@@ -1,4 +1,4 @@
-"use client"
+// "use client"
 // import { FacebookProvider, CustomChat } from 'react-facebook';
 
 // const FB = () => {
@@ -10,41 +10,14 @@
 // }
 
 // export default FB
+import { MessengerChat } from "react-messenger-chat-plugin";
 
-import { useEffect } from 'react';
-
-const FacebookChat: React.FC = () => {
-  useEffect(() => {
-    const chatbox = document.getElementById('fb-customer-chat');
-    if (chatbox) {
-      chatbox.setAttribute('page_id', '530863376787158'); // Replace with your actual page ID
-      chatbox.setAttribute('attribution', 'biz_inbox');
-    }
-
-    // Facebook SDK initialization
-    (window as any).fbAsyncInit = function () {
-      (window as any).FB.init({
-        xfbml: true,
-        version: '1', // Replace with your actual API version, e.g., 'v18.0'
-      });
-    };
-
-    // Load the Facebook SDK script if not already loaded
-    const scriptId = 'facebook-jssdk';
-    if (!document.getElementById(scriptId)) {
-      const js = document.createElement('script');
-      js.id = scriptId;
-      js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
-      document.body.appendChild(js);
-    }
-  }, []);
-
+const FB = () => {
   return (
-    <>
-      <div id="fb-root"></div>
-      <div id="fb-customer-chat" className="fb-customerchat"></div>
-    </>
-  );
-};
+    <a href="https://m.me/530863376787158" target="_blank" rel="noopener noreferrer">
+  Chat with us on Messenger!
+</a>
+  )
+}
 
-export default FacebookChat;
+export default FB
